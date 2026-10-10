@@ -2,10 +2,9 @@
 
 A simple full-stack issue tracker. Users register or log in, raise issues, and an admin assigns them to users who then close them. A global dashboard shows how many issues are open, in progress and closed.
 
-- **Live app:** `<ADD YOUR VERCEL URL HERE>`
-- **Source code:** `<ADD YOUR GITHUB REPO URL HERE>`
+- *Vercel url*: `issue-tracker-rmz3z7shv-luffy-784b.vercel.app`
 
-## Demo accounts
+ @Test accounts
 
 | Role  | Email               | Password  |
 |-------|---------------------|-----------|
@@ -26,13 +25,9 @@ These are created automatically the first time the app talks to the database. An
 - Global dashboard: Total, Open, In Progress, Closed
 - Filter the issue list by status
 
-### Status flow
 
-```
-Open  --(admin assigns)-->  In Progress  --(assigned user closes)-->  Closed
-```
 
-### Who can do what
+# Who can do what
 
 | Action                  | Any user | Issue creator | Assigned user | Admin |
 |-------------------------|:--------:|:-------------:|:-------------:|:-----:|
@@ -45,11 +40,11 @@ Open  --(admin assigns)-->  In Progress  --(assigned user closes)-->  Closed
 
 ## Tech stack
 
-- **Framework:** Next.js 16 (App Router), React 19. Frontend pages and the REST API live in one project
-- **Database:** PostgreSQL (Neon free tier in production)
+- **Framework:** Next.js 16 (App Router), React 19.
+- **Database:** PostgreSQL - Neon free tier
 - **DB driver:** `pg`
 - **Auth:** JWT (`jose`) stored in an httpOnly cookie, passwords hashed with `bcryptjs`
-- **Hosting:** Vercel (Hobby plan)
+- **Hosting:** Vercel
 
 ## Architecture
 
@@ -122,17 +117,6 @@ All endpoints return JSON. Errors look like `{ "error": "message" }`. Every endp
 | POST   | `/api/auth/logout`   |                               | Log out |
 | GET    | `/api/auth/me`       |                               | Current user |
 
-### Issues
-
-| Method | Endpoint                     | Body                      | Who | Description |
-|--------|------------------------------|---------------------------|-----|-------------|
-| GET    | `/api/issues`                |                           | any user | List all issues |
-| POST   | `/api/issues`                | `{ title, description }`  | any user | Create an issue (status Open) |
-| GET    | `/api/issues/:id`            |                           | any user | Get one issue |
-| PUT    | `/api/issues/:id`            | `{ title, description }`  | creator or admin | Edit an issue |
-| DELETE | `/api/issues/:id`            |                           | creator or admin | Delete an issue |
-| POST   | `/api/issues/:id/assign`     | `{ userId }`              | admin | Assign and set status to In Progress |
-| POST   | `/api/issues/:id/close`      |                           | assigned user or admin | Set status to Closed |
 
 ### Comments
 
@@ -141,23 +125,6 @@ All endpoints return JSON. Errors look like `{ "error": "message" }`. Every endp
 | GET    | `/api/issues/:id/comments`   |            | any user | List comments (oldest first) |
 | POST   | `/api/issues/:id/comments`   | `{ text }` | any user | Add a comment |
 
-### Other
-
-| Method | Endpoint          | Description |
-|--------|-------------------|-------------|
-| GET    | `/api/dashboard`  | `{ total, open, in_progress, closed }` (global counts) |
-| GET    | `/api/users`      | List users (used by the admin's assign dropdown) |
 
 Status codes used: `200/201` success, `400` bad input, `401` not logged in, `403` not allowed, `404` not found, `409` email already registered.
 
-## Deployment (Vercel + Neon)
-
-Short version below. The full explanation is in [BRD.md](./BRD.md#7-deployment).
-
-1. Push this project to a GitHub repository.
-2. Create a free Postgres database on [Neon](https://neon.tech) and copy its connection string.
-3. On [Vercel](https://vercel.com), choose **Add New > Project** and import the GitHub repo (framework is detected as Next.js).
-4. Add the environment variables `DATABASE_URL` and `JWT_SECRET`, then click **Deploy**.
-5. Open the Vercel URL and log in with a demo account. Tables and default users are created on the first request.
-
-To update the live app, push to the `main` branch. Vercel redeploys automatically.
