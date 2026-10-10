@@ -5,8 +5,7 @@
 | Project  | Issue Tracker System |
 | Version  | 1.0 |
 | Date     | 10 October 2026 |
-| Live URL | `<ADD YOUR VERCEL URL HERE>` |
-| Code     | `<ADD YOUR GITHUB REPO URL HERE>` |
+| Live URL | `issue-tracker-50h50n1iu-luffy-784b.vercel.app` 
 
 ## 1. Purpose
 
